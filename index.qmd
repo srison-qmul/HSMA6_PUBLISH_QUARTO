@@ -1,0 +1,98 @@
+---
+title: "Hello HSMA!"
+format:
+    html:
+#        code-fold: true
+        toc: true
+---
+
+# This is a top-level header
+
+This is my first **Quarto** *report*.
+
+## This is a second-level header
+
+This is some text before a list.
+
+- First item
+- Second item
+    - Indented item
+
+1. Item 1
+1. Item 2
+1. Item 3
+    1. Indented item 3
+
+### This is a third-level header
+
+_single underscore_
+
+__double underscore__
+
+[You put the link in square bracket, and the link in brackets](https://www.google.co.uk)
+
+![You can insert local images -- remember the ! at the start or it won't render them inline](code_along/lter_penguins.png)
+
+![You can link URL images](https://www.qmul.ac.uk/wiph/media/the-wolfson-institute-of-population-health-wiph/cpc-staff-photos/Mugshot---colour---square.jpg){width=100}
+
+# Let's add some 
+```{python}
+species = "Chinstrap"
+```
+
+```{python}
+#| label: data_import
+import pandas as pd
+from itables import show
+penguins_df = pd.read_csv("penguins_df.csv")
+
+filtered_df = penguins_df[penguins_df['species']== species]
+
+show(filtered_df)
+```
+
+```{python}
+#| echo: false
+#| label: plot
+# Quarto remember what was in previous code cells
+# Hash pipe (#|) option can modify behaviour of code cell
+# for example
+# #| echo: false hide the text
+# #| label: label_name labels the call
+import plotly.express as px
+px.scatter(
+    filtered_df,
+    x="bill_length_mm",
+    y="bill_depth_mm",
+    color="species"
+)
+```
+
+You can blend `python` and `R` into the same Quarto workbook.  Quarto will even try to inteligently allow one language's variable into the other.
+
+```{python}
+#| label: set-my-number
+my_number = 15
+```
+
+The number you chose is `{python} my_number`
+
+The average weight of a penguin is `{python} penguins_df['body_mass_g'].mean()`
+
+::: {.callout}
+Here is my callout
+:::
+
+::: {.callout-tip}
+Here is my callout tip
+
+:::
+
+::: {.callout-tip
+collapse="true"}
+Here is my handy tip
+```{python}
+#| label: python-within-callout-tip
+print("Here's some python code buddy!")
+```
+:::
